@@ -1,11 +1,13 @@
 ---
 - name: Generateur de Configuration
-  hosts: all
-  connection: local
+  hosts: localhost    # On cible explicitement localhost
+  connection: local   # <--- INDISPENSABLE : Empêche Ansible d'essayer le SSH
   gather_facts: no
   vars:
     # --- VALEURS PAR DEFAUT ---
+    # Ces valeurs bouchent les trous si le formulaire AWX est vide
     hostname: "ROUTEUR-DEFAULT"
+    password: "CiscoPassword123!"  # <--- Ajouté pour corriger ton erreur
     site_code: "SITE-XX"
     wan_ip: "192.0.2.10"
     wan_mask: "255.255.255.0"
