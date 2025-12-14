@@ -1,0 +1,17 @@
+---
+- name: Generateur de Configuration
+  hosts: localhost
+  gather_facts: no
+  vars:
+    # Valeur par défaut pour éviter un crash si vide
+    hostname: "ROUTEUR-TEST"
+  
+  tasks:
+    - name: Création du fichier de config
+      template:
+        src: templates/cisco_full.j2
+        dest: "/tmp/{{ hostname }}.cfg"
+
+    - name: AFFICHER LE RESULTAT
+      debug:
+        msg: "{{ lookup('file', '/tmp/' + hostname + '.cfg') }}"
