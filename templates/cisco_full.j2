@@ -4,7 +4,7 @@ ip cef
 no ipv6 cef
 ip domain name cl-hosting.internal
 multilink bundle-name authenticated
-username clh-admin privilege 15 secret Capra-SW13170!
+username clh-admin privilege 15 secret {{ password }}
 ip ssh version 2
 crypto key generate rsa modulus 2048
 line vty 0 4 
