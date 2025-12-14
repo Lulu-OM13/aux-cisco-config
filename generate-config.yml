@@ -1,13 +1,12 @@
 ---
 - name: Generateur de Configuration
-  hosts: localhost    # On cible explicitement localhost
-  connection: local   # <--- INDISPENSABLE : Empêche Ansible d'essayer le SSH
+  hosts: localhost
+  connection: local
   gather_facts: no
   vars:
     # --- VALEURS PAR DEFAUT ---
-    # Ces valeurs bouchent les trous si le formulaire AWX est vide
     hostname: "ROUTEUR-DEFAULT"
-    password: "CiscoPassword123!"  # <--- Ajouté pour corriger ton erreur
+    password: "CiscoPassword123!"
     site_code: "SITE-XX"
     wan_ip: "192.0.2.10"
     wan_mask: "255.255.255.0"
@@ -29,6 +28,12 @@
         src: templates/cisco_full.j2
         dest: "/tmp/{{ hostname }}.cfg"
 
-    - name: AFFICHER LE RESULTAT
+    # Etape 1 : On lit le fichier comme un humain
+    - name: LECTURE DU FICHIER
+      command: cat "/tmp/{{ hostname }}.cfg"
+      register: resultat_lecture
+
+    # Etape 2 : On affiche les lignes proprement
+    - name: AFFICHER LA CONFIGURATION
       debug:
-        msg: "{{ lookup('file', '/tmp/' + hostname + '.cfg').split('\n') }}"
+        var: resultat_lecture.stdout_lines
