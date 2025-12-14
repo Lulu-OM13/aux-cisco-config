@@ -31,4 +31,4 @@
 
     - name: AFFICHER LE RESULTAT
       debug:
-        msg: "{{ lookup('file', '/tmp/' + hostname + '.cfg') }}"
+        msg: "{{ lookup('file', '/tmp/' + hostname + '.cfg').split('\n') }}"
