@@ -89,38 +89,4 @@ interface GigabitEthernet0/1.130
  ip virtual-reassembly in
  no shutdown
 !
-! ===== BGP VERS CORE =====
-router bgp 64999
- bgp log-neighbor-changes
- neighbor {{ bgp_neighbor_ip }} remote-as 65500
- !
- address-family ipv4
-  network {{ lan_data_network }} mask {{ lan_data_mask }}
-  network {{ lan_voip_network }} mask {{ lan_voip_mask }}
-  neighbor {{ bgp_neighbor_ip }} activate
- exit-address-family
-!
-! ===== NAT + ROUTE PAR DEFAUT =====
-{% if wan_type == 'fibre' %}
-ip nat inside source list 1 interface GigabitEthernet0/0/0 overload
-{% else %}
-ip nat inside source list 1 interface GigabitEthernet0/0 overload
-{% endif %}
-!
-ip route 0.0.0.0 0.0.0.0 {{ wan_gateway }}
-!
-! ===== ACLs =====
-access-list 1 permit {{ lan_data_network }} {{ lan_data_wildcard }}
-access-list 1 permit {{ lan_voip_network }} {{ lan_voip_wildcard }}
-!
-access-list 100 permit ip {{ lan_data_network }} {{ lan_data_wildcard }} any
-access-list 100 permit ip {{ lan_voip_network }} {{ lan_voip_wildcard }} any
-!
-line con 0
- logging synchronous
-line aux 0
-line vty 0 4
- login local
- transport input ssh
-!
 end
