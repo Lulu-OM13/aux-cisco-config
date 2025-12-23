@@ -6,10 +6,21 @@
   vars:
     # --- VALEURS PAR DEFAUT ---
     hostname: "ROUTEUR-DEFAULT"
-    admin_password: "CiscoPassword123!" # <--- Nouveau
     site_code: "SITE-XX"
-    wan_type: "cuivre"                  # <--- Nouveau (cuivre ou fibre)
     
+    # NOUVELLES VARIABLES
+    admin_username: "lucas-admin"
+    admin_password: "CiscoPassword123!"
+    domain_name: "lucas.internal"
+    
+    dhcp_pool_lan_name: "LAN-SITE-XX"
+    dns_servers_lan: "10.200.4.1 8.8.8.8"
+    
+    dhcp_pool_voip_name: "VOIP-SITE-XX"
+    dns_servers_voip: "8.8.8.8"
+
+    # RESEAU
+    wan_type: "cuivre"
     wan_ip: "192.0.2.10"
     wan_mask: "255.255.255.252"
     wan_gateway: "192.0.2.9"
